@@ -30,6 +30,7 @@ def GoPoop(room):
 
 def SleepyTime(room):
   sys.stdout.write('You curl up in the bed and close your eyes... right as you begin to drift off to sleep you take a deep breath of air... oh my god! someone pooped in the bed!!! \n')
+  room.description += ' Within the ruffled sheets of the bed you think you spot a small brown nugget of poo-poo.'
   return room
 
 def RunInteractiveLoop(room):
