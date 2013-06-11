@@ -20,11 +20,16 @@ def RunTheDungeon():
       
   round_room.description = 'A round room. There\'s a bed in the corner, and stairs outside.'
   round_room.doors['stairs'] = outside
+  round_room.commands['sleep'] = SleepyTime
 
   RunInteractiveLoop(square_room)
 
 def GoPoop(room):
   sys.stdout.write('You squat down and squeeze out a brown log.\n')
+  return room
+
+def SleepyTime(room):
+  sys.stdout.write('You curl up in the bed and close your eyes... right as you begin to drift off to sleep you take a deep breath of air... oh my god! someone pooped in the bed!!! \n')
   return room
 
 def RunInteractiveLoop(room):
