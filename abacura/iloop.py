@@ -8,17 +8,18 @@ def RunTheDungeon():
   # Our dungeon only has one room, and that room has no doors.
   square_room = dungeon.Room()
   
+  round_room = dungeon.Room()
+  
   outside = dungeon.Room('You are outside now. Is that a rumbling in your bowels? An open window leads to the square room. Stairs lead to the round room',
-  {'window': square_room},
+  {'window': square_room, 'stairs': round_room},
   {'poop': GoPoop})
 
   square_room.description = 'A square room. You can\'t sleep here. There is an open window.'
   square_room.doors['window'] = outside
   
       
-  round_room = dungeon.Room(
-      'A round room. There\'s a bed in the corner, and stairs outside.',
-      {'stairs': outside})
+  round_room.description = 'A round room. There\'s a bed in the corner, and stairs outside.'
+  round_room.doors['stairs'] = outside
 
   RunInteractiveLoop(square_room)
 
@@ -29,8 +30,9 @@ def GoPoop(room):
 def RunInteractiveLoop(room):
   """Takes commands from the user and tries to execute them."""
 
+  sys.stdout.write(room.description + '\n')
+
   while True:  # This loop only exits if we explicitly break.
-    sys.stdout.write(room.description + '\n')
     # Print a prompt to sys.stdout (the "standard output").
     sys.stdout.write('MUD> ')
     # Allow the user to enter a command.
@@ -55,6 +57,7 @@ def RunInteractiveLoop(room):
       else:
         sys.stdout.write('You go %s.\n' % user_words[1])
         room = room.doors[user_words[1]]
+        sys.stdout.write(room.description + '\n')
 
     if user_words[0] in room.commands:
       room = room.commands[user_words[0]](room, *user_words[1:])
